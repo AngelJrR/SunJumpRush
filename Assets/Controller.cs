@@ -26,7 +26,7 @@ public class Controller : MonoBehaviour
     void Update()
     {
         direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        if (Input.GetKeyDown(KeyCode.Space) && onGround)
+        if (Input.GetButtonDown("Jump") && onGround)
         {
             playerBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
@@ -78,7 +78,7 @@ public class Controller : MonoBehaviour
         if (collision.tag == "Bottom")
         {
             //playerCollider.enabled = true;
-            Invoke("stupid", 0.3f);
+            Invoke("stupid", 0.2f);
             onGround = false;
             //Debug.Log("hllo");
         }

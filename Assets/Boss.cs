@@ -84,7 +84,7 @@ public class Boss : MonoBehaviour
     {
         if (collision.tag == "Bottom")
         {
-            playerCollider.enabled = true;
+            Invoke("stupid", 2f);
             onGround = false;
         }
 
@@ -113,4 +113,8 @@ public class Boss : MonoBehaviour
         transform.parent = null;
     }
 
+    public void stupid()
+    {
+        playerCollider.enabled = true;
+    }
 }
