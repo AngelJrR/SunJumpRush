@@ -34,7 +34,7 @@ Transform:
   m_Children:
   - {fileID: 8290821384229171980}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &535701921877845901
 SpriteRenderer:
@@ -178,6 +178,8 @@ MonoBehaviour:
   playerCollider: {fileID: 535701921877845897}
   health: 10
   damage: 1
+  player: {fileID: 0}
+  followSpeed: 5
 --- !u!1001 &535701920832479346
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -186,6 +188,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 535701921877845900}
     m_Modifications:
+    - target: {fileID: -5445818520241314606, guid: 856c3fa3e72a9474c8ee9e7a0d76f072, type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -5445818520241314606, guid: 856c3fa3e72a9474c8ee9e7a0d76f072, type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 985122515643719466, guid: 40fe500fb7e3cb44bbeaa9f5076cbfe4, type: 3}
     - target: {fileID: -5445818520241314606, guid: 856c3fa3e72a9474c8ee9e7a0d76f072, type: 3}
       propertyPath: degree
       value: 180

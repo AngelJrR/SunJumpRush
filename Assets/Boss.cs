@@ -12,12 +12,16 @@ public class Boss : MonoBehaviour
     Vector2 direction;
     bool onGround = false;
     public BoxCollider2D playerCollider;
-    public int health = 10;
+    public int health = 30;
     public int damage = 1;
+    public GameObject player;
+    public float followSpeed;
 
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+
     }
 
     // Update is called once per frame
@@ -33,6 +37,9 @@ public class Boss : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, followSpeed * Time.deltaTime);
+
     }
 
     void FixedUpdate()
@@ -54,11 +61,17 @@ public class Boss : MonoBehaviour
         {
             playerCollider.enabled = false;
         }
-        if (collision.tag == "EnemyBullet")
+        if (collision.tag == "Bullet")
         {
             health -= damage;
-            Debug.Log("helo");
         }
+
+
+        if (collision.tag == "JumpPad")
+        {
+            playerBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
+
 
     }
 
