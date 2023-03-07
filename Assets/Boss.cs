@@ -45,7 +45,11 @@ public class Boss : MonoBehaviour
     void FixedUpdate()
     {
         playerBody.AddForce(direction.x * Vector2.right * moveSpeed);
-
+        
+        if(transform.position.y <= -14.5)
+        {
+                playerBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
         // playerBody.MovePosition(movement);
 
     }
@@ -61,6 +65,7 @@ public class Boss : MonoBehaviour
         {
             playerCollider.enabled = false;
         }
+
         if (collision.tag == "Bullet")
         {
             health -= damage;

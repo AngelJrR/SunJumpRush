@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     public Rigidbody2D enemyBody;
     public float enemySpeed;
     public float enemyJump;
+    float resetJump = 12;
     public GameObject player;
     bool onGround = false;
     public GameManager gameManager;
@@ -25,6 +26,8 @@ public class Enemy : MonoBehaviour
     bool killable = true;
     public Controller playerController;
     public Collider2D enemyCollider;
+    public float health = 1;
+    float goomSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +35,9 @@ public class Enemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<Controller>();
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-       // if(type == 2)
+        goomSpeed = Random.Range(1, 3);
+        //enemyCollider.enabled= true;
+        // if(type == 2)
         //transform.position = Vector2.MoveTowards(this.transform.position, new Vector2(0, 18), enemySpeed * Time.deltaTime);
 
     }
@@ -47,6 +52,23 @@ public class Enemy : MonoBehaviour
         else if (type == 3)
             mage();
         
+        if(health <= 0)
+        {
+            gameManager.enemiesKilled++;
+
+            Destroy(gameObject);
+
+        }
+        
+    }
+
+    private void FixedUpdate()
+    {
+
+        if (transform.position.y <= -14.5)
+        {
+            enemyBody.AddForce(Vector2.up * resetJump, ForceMode2D.Impulse);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -63,28 +85,31 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (collision.tag == "Bullet" && killable)
+        if (collision.tag == "Bullet")
         {
-            gameManager.enemiesKilled++;
 
-            Destroy(gameObject);
+            //gameManager.enemiesKilled++;
+            health--;
+            //Destroy(gameObject);
         }
 
         if (collision.tag == "Bottom")
         {
             enemyCollider.enabled = false;
-            //onGround = false;
         }
+
     }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Bottom")
         {
-            enemyCollider.enabled = true;
-           // onGround = false;
+            
+            onGround = false;
+            Invoke("stupid", .15f);
         }
     }
-
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
         onGround = true;
@@ -163,6 +188,11 @@ public class Enemy : MonoBehaviour
 
     }
 
+    public void stupid()
+    {
+        enemyCollider.enabled = true;
+    }
+
     public void shoot()
     {
         float angle = Mathf.Atan2(player.transform.position.y - transform.position.y, player.transform.position.x - transform.position.x) * Mathf.Rad2Deg - degree;
@@ -174,13 +204,17 @@ public class Enemy : MonoBehaviour
 
     public void goomb()
     {
-        transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, enemySpeed * Time.deltaTime);
-
+        transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, enemySpeed * Time.deltaTime * goomSpeed);
     }
 
     public void mage()
     {
-        playerController.damage = 2;
+        Enemy enemyHelp;
+        enemyHelp = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
+
+
+        //playerController.damage = 2;
+       enemyHelp.health++;
         //transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, enemySpeed * Time.deltaTime);
         float jumpM = Random.Range(2, 8);
         jTimer += Time.deltaTime;

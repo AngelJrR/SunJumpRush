@@ -14,10 +14,12 @@ public class Controller : MonoBehaviour
     public BoxCollider2D playerCollider;
     public int health = 10;
     public int damage = 1;
+    SpriteRenderer sprite;
 
     // Start is called before the first frame update
     void Start()
     {
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -33,6 +35,12 @@ public class Controller : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        if (Input.GetAxisRaw("Horizontal") < 0)
+            sprite.flipX = true;
+        else
+            sprite.flipX = false;
+
     }
 
     void FixedUpdate()
@@ -54,11 +62,13 @@ public class Controller : MonoBehaviour
         if (collision.tag == "Bottom")
         {
             playerCollider.enabled = false;
+            //Debug.Log("hi");
         }
+
         if (collision.tag == "EnemyBullet")
         {
             health -= damage;
-            Debug.Log("helo");
+           // Debug.Log("helo");
         }
 
     }
@@ -67,8 +77,10 @@ public class Controller : MonoBehaviour
     {
         if (collision.tag == "Bottom")
         {
-            playerCollider.enabled = true;
+            //playerCollider.enabled = true;
+            Invoke("stupid", 0.3f);
             onGround = false;
+            //Debug.Log("hllo");
         }
       
     }
@@ -94,6 +106,11 @@ public class Controller : MonoBehaviour
     {
         onGround = false;
         transform.parent = null;
+    }
+
+    public void stupid()
+    {
+        playerCollider.enabled = true;
     }
 
 }

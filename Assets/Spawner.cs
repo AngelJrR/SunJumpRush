@@ -80,7 +80,7 @@ public class Spawner : MonoBehaviour
     public void enemySpawn()
     {
         //Debug.Log("Hello");
-        float spawnV = Random.Range(1, 3);
+        float spawnV = Random.Range(1, 4);
         //float sideVariance = Random.Range(-22, 22);
         switch (spawnV)
         {
