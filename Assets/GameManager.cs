@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,9 +12,13 @@ public class GameManager : MonoBehaviour
     public int enemiesToKill = 1;
     public int enemiesKilled = 0;
     public bool waveStart = false;
-    public int BossWave = 5;
-    public bool BossTime = false;
-    public bool finale = false;
+
+    public bool bossKilled = false;
+    public bool playerAlive = true;
+    [SerializeField] GameObject gameOverScreen;
+    [SerializeField] GameObject gameWinScreen;
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,39 +28,54 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text.text = "Waves Until Boss: " + (BossWave);
-        if (!finale)
-        {
-            if (BossWave >= 0)
-            {
-                if (enemiesKilled == enemiesToKill)
-                {
-                    //Debug.Log("Hello");
-                    enemiesKilled = 0;
-                    enemiesToKill += 2;
-                    wave++;
-                    waveStart = true;
-                    BossWave--;
-                }
-            }
-            else
-            {
-                //finale = true;
-                BossTime = true;
-                waveStart = false;
-            }
-        }
-        /*
-        if (enemiesKilled == enemiesToKill)
+        text.text = "Waves Until Boss " + wave;
+        
+        
+        if(enemiesKilled == enemiesToKill)
         {
             //Debug.Log("Hello");
             enemiesKilled = 0;
             enemiesToKill += 2;
             wave++;
             waveStart = true;
-
+            
         }
-        */
 
+        if (playerAlive == false)
+        {
+            GameOver();
+        }
+
+        if (bossKilled == true)
+        {
+            WinGame();
+        }
+
+
+    }
+
+    public void GameOver()
+    {
+        gameOverScreen.SetActive(true);
+    }
+
+    public void WinGame()
+    {
+        gameWinScreen.SetActive(true);
+    }
+
+    public void ResetGame()
+    {
+        SceneManager.LoadScene(1); 
+    }
+
+    public void ContinueGame()
+    {
+        gameWinScreen.SetActive(false); 
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }

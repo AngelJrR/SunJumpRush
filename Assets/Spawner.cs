@@ -12,12 +12,11 @@ public class Spawner : MonoBehaviour
     public float pTimer = 0f;
     public float eSpawnRate;
     public float pSpawnRate;
-    float sideVariance = -23;
+    float sideVariance = -14;
     //int wave = 1;
     public GameManager gameManager;
     bool ready = false;
     int toSpawn = 0;
-    public GameObject boss;
 
     // Start is called before the first frame update
     void Start()
@@ -48,12 +47,8 @@ public class Spawner : MonoBehaviour
             ready = false;
         }
 
-        if (gameManager.BossTime)
-        {
-           gameManager.finale = true;
-            gameManager.BossTime = false;
-            bossSpawn();
-        }
+
+
 
         pTimer += Time.deltaTime;
         if (pTimer >= pSpawnRate)
@@ -67,7 +62,7 @@ public class Spawner : MonoBehaviour
     public void platformSpawn()
     {
         float spawnV = Random.Range(1, 4);
-        sideVariance = Random.Range(-26, 26);
+        sideVariance = Random.Range(-18, 18);
 
         switch (spawnV)
         {
@@ -88,12 +83,5 @@ public class Spawner : MonoBehaviour
             case 2: Instantiate(enemyTwo, new Vector3(sideVariance, transform.position.y + 2, transform.position.z), transform.rotation); break;
             case 3: Instantiate(enemyThree, new Vector3(sideVariance, transform.position.y + 2, transform.position.z), transform.rotation); break;
         }
-    }
-
-    public void bossSpawn()
-    {
-        //sideVariance = Random.Range(-18, 18);
-
-        Instantiate(boss, new Vector3(sideVariance, transform.position.y + 2, transform.position.z), transform.rotation);
     }
 }

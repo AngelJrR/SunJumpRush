@@ -6,7 +6,6 @@ public class Bullets : MonoBehaviour
 {
     public float flySpeed;
     Rigidbody2D bulletBody;
-    public int type;
 
     // Start is called before the first frame update
     void Start()
@@ -27,21 +26,4 @@ public class Bullets : MonoBehaviour
     {
         bulletBody.velocity = -transform.right * flySpeed;
     }
-    
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Player" && type == 2)
-            Destroy(gameObject);
-    }
-    
-    
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player" && type == 2)
-            Destroy(gameObject);
-
-        if (collision.gameObject.tag == "Enemy" && type == 1)
-            Destroy(gameObject);
-    }
-    
 }
