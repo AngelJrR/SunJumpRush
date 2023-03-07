@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,10 +12,13 @@ public class GameManager : MonoBehaviour
     public int BossWave = 5;
     public bool BossTime = false;
     public bool finale = false;
+    public GameObject lose;
+    public GameObject win;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -55,6 +57,34 @@ public class GameManager : MonoBehaviour
 
         }
         */
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene("SampleScene");
+
+        }
+    }
+
+
+    public void Win()
+    {
+        win.SetActive(true);
+    }
+
+    public void Lose()
+    {
+        lose.SetActive(true);
+    }
+
+    public void reBegin()
+    {
+        SceneManager.LoadScene("SampleScene");
+        Time.timeScale = 1;
+
+    }
+
+    public void menu()
+    {
+        SceneManager.LoadScene("MainMenu");
 
     }
 }

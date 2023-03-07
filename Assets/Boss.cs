@@ -16,11 +16,13 @@ public class Boss : MonoBehaviour
     public int damage = 1;
     public GameObject player;
     public float followSpeed;
+    GameManager manager;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 
     }
 
@@ -36,6 +38,8 @@ public class Boss : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
+            manager.Win();
+
         }
 
         transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, followSpeed * Time.deltaTime);

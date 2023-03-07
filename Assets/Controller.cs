@@ -15,11 +15,14 @@ public class Controller : MonoBehaviour
     public int health = 10;
     public int damage = 1;
     SpriteRenderer sprite;
+    GameManager manager;
 
     // Start is called before the first frame update
     void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
+        manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+
     }
 
     // Update is called once per frame
@@ -34,6 +37,8 @@ public class Controller : MonoBehaviour
         if(health <= 0)
         {
             Destroy(gameObject);
+            manager.Lose();
+            Time.timeScale = 0;
         }
 
         if (Input.GetAxisRaw("Horizontal") < 0)
@@ -57,6 +62,9 @@ public class Controller : MonoBehaviour
         if (collision.tag == "Sun")
         {
             Destroy(gameObject);
+            manager.Lose();
+            Time.timeScale = 0;
+
         }
 
         if (collision.tag == "Bottom")
